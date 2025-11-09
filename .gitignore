@@ -1,0 +1,66 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files
+.env
+.env.*
+
+# Build / cache
+.cache
+.vite
+.parcel-cache
+.next
+out
+build
+dist/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+.eslintcache
+.pnp.*
+
+# IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Large binaries / archives / media (often not suitable for repo)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.iso
+*.exe
+*.dll
+*.pdb
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.psd
