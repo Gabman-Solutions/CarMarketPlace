@@ -70,12 +70,3 @@ export default function FormField({
   );
 }
 
-/* Uso del componente FormField con las opciones y carga condicional
-<FormField
-  field={...}
-  value={...}
-  onChange={...}
-  options={field.label === "Car Brand" ? makers : field.label === "Car Model" ? models : []}
-  isLoading={field.label === "Car Brand" ? loadingMakers : field.label === "Car Model" ? loadingModels : false}
-/>
-*/
