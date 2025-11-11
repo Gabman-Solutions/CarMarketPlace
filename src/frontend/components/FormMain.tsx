@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import FormField from "./FormField";
 import fields from "../data/fields.ts";
+import { fetchCarMakers, fetchCarModels } from "../services/carApi.ts";
+
 
 type FormValues = {
   [key: string]: string;
@@ -9,23 +11,62 @@ type FormValues = {
 export default function FormMain() {
   const [isDark, setIsDark] = useState(false);
   const [values, setValues] = useState<FormValues>({});
+  const [makers, setMakers] = useState<string[]>([]);
+  const [models, setModels] = useState<string[]>([]);
+  const [loadingMakers, setLoadingMakers] = useState(false);
+  const [loadingModels, setLoadingModels] = useState(false);
 
   useEffect(() => {
-    // inicializar valores de los campos con claves basadas en id
     const initial: FormValues = {};
     fields.forEach((f) => (initial[`field-${f.id}`] = ""));
     setValues(initial);
   }, []);
 
-  function handleChange(id: string, e: React.ChangeEvent<HTMLInputElement>) {
+  // Fetch makers on mount
+  useEffect(() => {
+    const fetchMakersAsync = async () => {
+      setLoadingMakers(true);
+      try {
+        const data = await fetchCarMakers();
+        setMakers(data);
+      } catch (error) {
+        console.error("Error fetching makers:", error);
+        setMakers([]);
+      } finally {
+        setLoadingMakers(false);
+      }
+    };
+    fetchMakersAsync();
+  }, []);
+
+  // Fetch models when Car Brand (field-1) changes
+  useEffect(() => {
+    const carBrand = values["field-1"];
+    if (carBrand) {
+      const fetchModelsAsync = async () => {
+        setLoadingModels(true);
+        try {
+          const data = await fetchCarModels(carBrand);
+          setModels(data);
+        } catch (error) {
+          console.error("Error fetching models:", error);
+          setModels([]);
+        } finally {
+          setLoadingModels(false);
+        }
+      };
+      fetchModelsAsync();
+    } else {
+      setModels([]);
+    }
+  }, [values]);
+
+  function handleChange(id: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setValues((prev) => ({ ...prev, [id]: e.target.value }));
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // enviar datos: por ahora los mostramos en consola
-    console.log("Form submit", values);
-    // aquí puedes llamar a una API o prop
     alert("Submitted: " + JSON.stringify(values));
   }
 
@@ -55,8 +96,6 @@ export default function FormMain() {
                 Fill up the form to search cars based on your criteria.
               </p>
             </div>
-
-            {/* Toggle day/night */}
             <button
               type="button"
               aria-label="Toggle day/night"
@@ -70,10 +109,16 @@ export default function FormMain() {
               {isDark ? "☀️" : "🌙"}
             </button>
           </div>
-
           <div className="flex flex-col gap-3">
             {fields.map((field) => {
               const id = `field-${field.id}`;
+              // Pass options to select fields
+              let options: string[] = [];
+              if (field.label === "Car Brand") {
+                options = makers;
+              } else if (field.label === "Car Model") {
+                options = models;
+              }
               return (
                 <FormField
                   key={field.id}
@@ -81,6 +126,8 @@ export default function FormMain() {
                   isDark={isDark}
                   value={values[id] ?? ""}
                   onChange={(e) => handleChange(id, e)}
+                  options={options}
+                  isLoading={field.label === "Car Brand" ? loadingMakers : field.label === "Car Model" ? loadingModels : false}
                 />
               );
             })}

@@ -2,13 +2,13 @@
 const fields = [
     {   id : 1,
         label: "Car Brand", 
-        type: "text",
+        type: "select",
         placeholder: "Insert the brand of the car"
     },
     {   
         id : 2,
         label: "Car Model", 
-        type: "text",
+        type: "select",
         placeholder: "Insert Car Model"
     },
     {  
