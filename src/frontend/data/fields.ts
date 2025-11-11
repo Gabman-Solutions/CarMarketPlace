@@ -14,13 +14,13 @@ const fields = [
     {  
         id : 3,
         label: "Car Year", 
-        type: "text",
+        type: "input",
         placeholder: "Insert Car Year"
     },
      {  
         id : 4,
         label: "Maximum Price", 
-        type: "text",
+        type: "input",
         placeholder: "Insert Maximum Price"
     },
     
