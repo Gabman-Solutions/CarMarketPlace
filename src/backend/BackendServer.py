@@ -1,9 +1,8 @@
 import Car
-import backend.BBDDConnector as BBDDConnector
-import backend.FrontEndConnector as FrontEndConnector
+import BBDDConnector
 from flask import Flask
 from flask_cors import CORS
-from routes.main_routes import main_routes
+import main_routes
 
 app = Flask(__name__)
 CORS(app)  # Habilitar CORS para recibir requests desde React
@@ -12,6 +11,6 @@ CORS(app)  # Habilitar CORS para recibir requests desde React
 app.register_blueprint(main_routes)
 
 if __name__ == "__main__":
-        app.run(debug=True)
+    app.run(debug=True)
     
     
