@@ -6,7 +6,16 @@ export default {
     "./src/frontend/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: {
+          bg: '#1a1a1a',
+          surface: '#2d2d2d',
+          text: '#ffffff'
+        }
+      }
+    },
   },
+  darkMode: 'class',
   plugins: [],
 }

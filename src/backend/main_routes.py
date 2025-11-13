@@ -1,47 +1,42 @@
-from flask import Blueprint,Flask, request, jsonify
-from flask_cors import CORS
+from flask import Blueprint, request, jsonify
 import requests
 
 main_routes = Blueprint('main_routes', __name__)
-url = 'https://api.api-ninjas.com/v1/'
-app = Flask(__name__)
-CORS(app)  # Habilitar CORS para recibir requests desde React
+url = 'https://api.api-ninjas.com/v1'
+API_KEY = "+OC9ZDrTJrvOpHmyHn+AmQ==TwqQIeaB5hshqkZW"
+
 @main_routes.route("/api/brands", methods=["GET"])
 def get_car_brands():
     try:
         headers = {
-            "X-Api-Key": "+OC9ZDrTJrvOpHmyHn+AmQ==TwqQIeaB5hshqkZW",
+            "X-Api-Key": API_KEY,
             "Accept": "application/json"
         }
         response = requests.get(url + '/makers', headers=headers)
-        # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            posts = response.json()
-            return posts
+            return jsonify(response.json())
         else:
-            print('Error:', response.status_code)
-            return None
+            return jsonify({"error": f"Error: {response.status_code}"}), response.status_code
     except Exception as e:
         print('Exception occurred:', str(e))
-        return None
+        return jsonify({"error": str(e)}), 500
 
 @main_routes.route("/api/models", methods=["GET"])
-def get_maker_models(maker):
+def get_maker_models():
     try:
+        maker = request.args.get('maker')
+        if not maker:
+            return jsonify({"error": "Maker parameter is required"}), 400
+        
         headers = {
-            "X-Api-Key": "+OC9ZDrTJrvOpHmyHn+AmQ==TwqQIeaB5hshqkZW",
+            "X-Api-Key": API_KEY,
             "Accept": "application/json"
         }
         response = requests.get(url + f'/carmodels?make={maker}', headers=headers)
-        # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            posts = response.json()
-            return posts
+            return jsonify(response.json())
         else:
-            print('Error:', response.status_code)
-            return None
+            return jsonify({"error": f"Error: {response.status_code}"}), response.status_code
     except Exception as e:
         print('Exception occurred:', str(e))
-        return None
-if __name__ == '__main__':
-    app.run(debug=True)
+        return jsonify({"error": str(e)}), 500

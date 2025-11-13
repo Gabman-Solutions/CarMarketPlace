@@ -58,7 +58,9 @@ export default function FormField({
           onChange={onChange}
           disabled={isLoading}
         >
-          <option value="">{isLoading ? "Cargando..." : "Selecciona una opción"}</option>
+          <option value="">
+            {isLoading ? "Cargando..." : "Selecciona una opción"}
+          </option>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -69,4 +71,3 @@ export default function FormField({
     </div>
   );
 }
-

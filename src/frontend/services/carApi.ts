@@ -2,14 +2,12 @@ import axios from 'axios';
 import type { Car, DraftCar } from '../types';
 
 // Configura la URL base de tu API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.api-ninjas.com/v1/';
-const API_TOKEN = import.meta.env.VITE_API_TOKEN || '';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'X-Api-Key':`${API_TOKEN}`,
   },
 });
 
@@ -112,4 +110,28 @@ export const searchCars = async (criteria: Partial<DraftCar>): Promise<Car[]> =>
     console.error('Error searching cars:', error);
     throw error;
   }
+};
+
+export const carApi = {
+  getBrands: async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/brands`);
+      if (!response.ok) throw new Error('Failed to fetch brands');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+      throw error;
+    }
+  },
+
+  getModels: async (maker: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/models?maker=${maker}`);
+      if (!response.ok) throw new Error('Failed to fetch models');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching models:', error);
+      throw error;
+    }
+  },
 };
