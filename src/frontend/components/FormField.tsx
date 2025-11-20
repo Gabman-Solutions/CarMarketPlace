@@ -22,7 +22,7 @@ export default function FormField({
   const inputId = `field-${field.id}`;
 
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div>
       <label
         className={`text-sm font-medium ${
           isDark ? "text-gray-300" : "text-gray-700"
@@ -58,7 +58,9 @@ export default function FormField({
           onChange={onChange}
           disabled={isLoading}
         >
-          <option value="">{isLoading ? "Cargando..." : "Selecciona una opción"}</option>
+          <option value="">
+            {isLoading ? "Cargando..." : "Selecciona una opción"}
+          </option>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -69,4 +71,3 @@ export default function FormField({
     </div>
   );
 }
-
