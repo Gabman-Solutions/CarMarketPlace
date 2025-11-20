@@ -22,7 +22,7 @@ export default function FormField({
   const inputId = `field-${field.id}`;
 
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div>
       <label
         className={`text-sm font-medium ${
           isDark ? "text-gray-300" : "text-gray-700"

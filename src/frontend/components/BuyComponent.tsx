@@ -90,7 +90,7 @@ export default function BuyComponent({ isDark }: BuyComponentProps) {
             isDark ? "text-white" : "text-gray-900"
           }`}
         >
-          🛒 Buy a Car
+           Buy a Car
         </h1>
         <p
           className={`text-lg transition-colors duration-300 ${
@@ -101,12 +101,12 @@ export default function BuyComponent({ isDark }: BuyComponentProps) {
         </p>
         <form
           onSubmit={handleSubmit}
-          className={`w-full max-w-3xl rounded-xl shadow-lg overflow-hidden transition-colors ${
+          className={`w-full rounded-xl overflow-hidden transition-colors ${
             isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"
           }`}
         >
           <div className="p-6 md:p-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className=" mb-4">
               <div>
                 <h2
                   className={`text-2xl font-semibold ${

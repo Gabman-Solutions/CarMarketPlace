@@ -1,10 +1,12 @@
-
 export type Car = {
     id: string
     brand: string
     model: string
     year: number
     price: number
+    mileage: number
+    description: string
+    image: string
 }
 export type Field = {
     id: number
@@ -12,5 +14,4 @@ export type Field = {
     type: string
     placeholder: string
 }
-
 export type DraftCar = Omit<Car,'id'>

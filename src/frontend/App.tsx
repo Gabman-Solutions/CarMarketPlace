@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Navbar from './components/Navbar';
 import BuyComponent from './components/BuyComponent';
 import SellComponet from './components/SellComponet';
-import Favorites from './components/Favorites';
+import Favorites from './components/Favorites/Favorites';
 import './App.css';
 
 function App() {

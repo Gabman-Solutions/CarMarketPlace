@@ -10,8 +10,11 @@ import {
   searchCars
 } from "../services/carApi";
 
+const API_BASE_URL = 'http://localhost:5000/api';
+
 type CarState = {
     cars: Car[];
+    favorites: Car[];
     activeId: Car["id"] | "";
     isLoading: boolean;
     error: string | null;
@@ -19,6 +22,7 @@ type CarState = {
     // Async actions
     fetchAllCars: () => Promise<void>;
     searchCarsAction: (criteria: Partial<DraftCar>) => Promise<void>;
+    fetchFavorites: () => Promise<void>;
     addCar: (data: DraftCar) => Promise<void>;
     deleteCar: (id: Car["id"]) => Promise<void>;
     getCarById: (id: Car["id"]) => Promise<void>;
@@ -29,6 +33,7 @@ export const useCarStore = create<CarState>()(
         persist(
             (set) => ({
                 cars: [],
+                favorites: [],
                 activeId: "",
                 isLoading: false,
                 error: null,
@@ -37,14 +42,25 @@ export const useCarStore = create<CarState>()(
                 fetchAllCars: async () => {
                     set({ isLoading: true, error: null });
                     try {
-                        const cars = await fetchCars();
-                        set({ cars, isLoading: false });
+                        const favorites = await fetchCars();
+                        set({ favorites, isLoading: false });
                     } catch (error) {
                         const errorMessage = error instanceof Error ? error.message : 'Error fetching cars';
                         set({ error: errorMessage, isLoading: false });
                     }
                 },
-                
+                fetchFavorites: async () => {
+                    set({ isLoading: true, error: null });
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/favorites`);
+                        if (!response.ok) throw new Error('Failed to fetch favorites');
+                        const favorites = await response.json();
+                        set({ favorites: favorites, isLoading: false });
+                    } catch (error) {
+                        const errorMessage = error instanceof Error ? error.message : 'Error fetching favorites';
+                        set({ error: errorMessage, isLoading: false });
+                    }   
+                },
                 // Search cars by criteria
                 searchCarsAction: async (criteria: Partial<DraftCar>) => {
                     set({ isLoading: true, error: null });
@@ -121,4 +137,4 @@ export const useCarStore = create<CarState>()(
             }
         )
     )
-);  
+);
