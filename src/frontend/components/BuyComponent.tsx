@@ -56,7 +56,7 @@ export default function BuyComponent({ isDark }: BuyComponentProps) {
             )}
           </div>
         ) : (
-          <CarForm isDark={isDark} onHandleSearchCar ={ handleSearchCar(cars)}/>
+          <CarForm isDark={isDark}/>
         )}
       </div>
     </div>

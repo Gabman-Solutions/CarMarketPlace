@@ -2,12 +2,15 @@ import axios from 'axios';
 import type { Car, DraftCar } from '../types';
 
 // Configura la URL base de tu API
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://car-data.p.rapidapi.com';
+const API_KEY = '8bbdf27184mshc95e28846468372p117dc3jsn3d821ae4d4d9'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'x-rapidapi-host': 'car-data.p.rapidapi.com',
+    'x-rapidapi-key': API_KEY
   },
 });
 
@@ -115,20 +118,22 @@ export const searchCars = async (criteria: FormData): Promise<Car[]> => {
 export const carApi = {
   getBrands: async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/brands`);
-      if (!response.ok) throw new Error('Failed to fetch brands');
-      return await response.json();
+      const response = apiClient.get(`/cars/makes`);
+      if (!response) throw new Error('Failed to fetch brands');
+      console.log((await response).data)
+      return (await response).data;
     } catch (error) {
       console.error('Error fetching brands:', error);
       throw error;
     }
   },
 
-  getModels: (maker: string) => {
+  getModels: async (maker: string) => {
     try {
-      const response = fetch(`${API_BASE_URL}/models?maker=${maker}`);
-      if (!response.ok) throw new Error('Failed to fetch models');
-      return response.json();
+      const response = await apiClient.get(`/cars?make=${maker}&limit=10`);
+      if (!response) throw new Error('Failed to fetch models');
+      console.log('response models' + JSON.stringify(response.data.models.model))
+      //return response;
     } catch (error) {
       console.error('Error fetching models:', error);
       throw error;
