@@ -102,7 +102,7 @@ export const deleteCarApi = async (id: string): Promise<void> => {
 /**
  * Search cars by criteria (brand, model, year, price)
  */
-export const searchCars = async (criteria: Partial<DraftCar>): Promise<Car[]> => {
+export const searchCars = async (criteria: FormData): Promise<Car[]> => {
   try {
     const response = await apiClient.get('/cars/search', { params: criteria });
     return response.data;
@@ -124,11 +124,11 @@ export const carApi = {
     }
   },
 
-  getModels: async (maker: string) => {
+  getModels: (maker: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/models?maker=${maker}`);
+      const response = fetch(`${API_BASE_URL}/models?maker=${maker}`);
       if (!response.ok) throw new Error('Failed to fetch models');
-      return await response.json();
+      return response.json();
     } catch (error) {
       console.error('Error fetching models:', error);
       throw error;

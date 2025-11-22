@@ -34,7 +34,7 @@ export default function FormField({
       {field.type === "input" ? (
         <input
           id={inputId}
-          name={inputId}
+          name={field.label}
           className={`w-full border rounded-md px-3 py-2 transition ${
             isDark
               ? "border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"
@@ -48,7 +48,7 @@ export default function FormField({
       ) : (
         <select
           id={inputId}
-          name={inputId}
+          name={field.label}
           className={`w-full border rounded-md px-3 py-2 transition ${
             isDark
               ? "border-gray-600 bg-gray-900 text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500"

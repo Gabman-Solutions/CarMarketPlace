@@ -1,3 +1,5 @@
+import CarForm from "./Car/CarForm";
+
 interface SellComponetProps {
   isDark: boolean;
 }
@@ -12,7 +14,7 @@ export default function SellComponet({ isDark }: SellComponetProps) {
         <p className={`text-lg transition-colors duration-300 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
           List your car for sale and reach thousands of potential buyers.
         </p>
-        {/* Contenido del componente Sell aquí */}
+        <CarForm isDark={isDark} />
       </div>
     </div>
   );

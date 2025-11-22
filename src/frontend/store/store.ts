@@ -21,7 +21,7 @@ type CarState = {
     
     // Async actions
     fetchAllCars: () => Promise<void>;
-    searchCarsAction: (criteria: Partial<DraftCar>) => Promise<void>;
+    searchCarsAction: (criteria: FormData) => Promise<void>;
     fetchFavorites: () => Promise<void>;
     addCar: (data: DraftCar) => Promise<void>;
     deleteCar: (id: Car["id"]) => Promise<void>;
@@ -62,7 +62,7 @@ export const useCarStore = create<CarState>()(
                     }   
                 },
                 // Search cars by criteria
-                searchCarsAction: async (criteria: Partial<DraftCar>) => {
+                searchCarsAction: async (criteria: FormData) => {
                     set({ isLoading: true, error: null });
                     try {
                         const cars = await searchCars(criteria);
